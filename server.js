@@ -17,10 +17,10 @@ const db = require("./config/myURL").mongoURL;
 
 
 //Attempt to connect to database
-mongoOptions = { useNewUrlParser: true, dbName: 'IMDB_clone', autoIndex: false, useUnifiedTopology: true}
+mongoOptions = { useNewUrlParser: true, dbName: 'Holidays', autoIndex: false, useUnifiedTopology: true}
 mongoose
   .connect(db, mongoOptions)
-  .then(() => console.log("MongoDB connected successfully"))
+  .then(() => console.log("MongoDB connected successfully..."))
   .catch(err => console.log(err));
 
 //secretKey
