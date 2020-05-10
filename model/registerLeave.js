@@ -22,10 +22,10 @@ const registerHoliday = new Schema({
         type: String,
         required: true,
     },
-    reportingManager: {
-        type: String,
-        required: true
-    },
+    reportingManager: [{
+        name: String,
+        email: String
+    }],
     status: Number,
     createdAt: {
         type: Date,

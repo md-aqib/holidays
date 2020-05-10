@@ -6,8 +6,6 @@ const myURL = require('./config/myURL')
 const routes = require('./routes/routes')
 const app = express()
 
-require('./prod')(app)
-
 //Middleware for bodyparser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -26,7 +24,6 @@ mongoose
 //secretKey
 var secret = myURL.secret
 app.set('secretKey', secret)
-
 
 //logging APIs
 app.use(morgan('dev'))
