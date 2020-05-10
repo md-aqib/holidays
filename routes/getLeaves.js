@@ -8,8 +8,8 @@ module.exports = async(req, res) => {
                 msg: 'please enter all details'
             })
         } else{
-            let leaveData = await DbLeave.find({dateOfLeave: req.body.date})
-            if(leaveData.length != 0 && leaveData[0].reportingManager[0].email == req.body.email){
+            let leaveData = await DbLeave.find({$and: [{dateOfLeave: req.body.date}, {'reportingManager.email': req.body.email}]})
+            if(leaveData.length != 0){
                 res.json({
                     success: true,
                     msg: 'Leave Data',
@@ -23,6 +23,7 @@ module.exports = async(req, res) => {
             }
         }
     } catch(err){
+        console.log(err)
         res.json({
             success: false,
             msg: 'Something went wrong'

@@ -3,8 +3,8 @@ const Schema = mongoose.Schema
 
 /**
  * Status
- * 0: Leave to be Taken
- * 1: Leave Taken
+ * 1: Leave to be Taken
+ * 2: Leave Taken
  **/
 
 const registerHoliday = new Schema({
@@ -14,18 +14,17 @@ const registerHoliday = new Schema({
     },
     employeeEmail: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     }, 
     dateOfLeave: [Date],
     reasonOfLeave: {
         type: String,
         required: true,
     },
-    reportingManager: [{
+    reportingManager: {
         name: String,
         email: String
-    }],
+    },
     status: Number,
     createdAt: {
         type: Date,

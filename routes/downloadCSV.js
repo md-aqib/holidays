@@ -3,7 +3,7 @@ const { Parser } = require('json2csv');
 
 module.exports = async(req, res) =>{
     try{
-        let query = { $and: [{ SGID: req.decoded.SGID }] }
+        let query = { $and: [] }
         if (req.body.date) {
             query.$and.push({
                 'dateOfLeave': new Date(req.body.date.getFullYear(), req.body.date.getMonth(), req.body.date.getDate())
@@ -54,6 +54,7 @@ module.exports = async(req, res) =>{
             })
         }
     } catch(err){
+        console.log(err)
         res.json({
             success: false,
             msg: 'Something went wrong'
