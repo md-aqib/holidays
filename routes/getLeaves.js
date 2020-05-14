@@ -8,7 +8,11 @@ module.exports = async(req, res) => {
                 msg: 'please enter all details'
             })
         } else{
-            let leaveData = await DbLeave.find({$and: [{dateOfLeave: req.body.date}, {'reportingManager.email': req.body.email}]})
+            gt = new Date(req.body.date)
+            lt = new Date(gt.getFullYear(), gt.getMonth(), gt.getDate() + 1)
+            let leaveData = await DbLeave.find({$and: [{dateOfLeave: { "$gte": gt, "$lte": lt }}, {'reportingManager.email': req.body.email}]})
+                    .sort({'dateOfLeave': 1})
+            console.log(leaveData)
             if(leaveData.length != 0){
                 res.json({
                     success: true,

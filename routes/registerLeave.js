@@ -4,7 +4,7 @@ const mailData = require('../common/mailData')
 
 module.exports = async(req, res) => {
     try{
-        if(!req.body.name || !req.body.email || !req.body.date || !req.body.reason || !req.body.status){
+        if(!req.body.name || !req.body.email || !req.body.date || !req.body.reason || !req.body.status || !req.body.reportingManager.name || !req.body.reportingManager.email){
             console.log(req.body)
             res.json({
                 success: false,

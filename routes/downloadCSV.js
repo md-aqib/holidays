@@ -1,14 +1,10 @@
 const DbLeave = require('../model/registerLeave')
-const { Parser } = require('json2csv');
+const { Parser, transforms: { unwind } } = require('json2csv');
 
 module.exports = async(req, res) =>{
     try{
-        let query = { $and: [] }
-        if (req.body.date) {
-            query.$and.push({
-                'dateOfLeave': new Date(req.body.date.getFullYear(), req.body.date.getMonth(), req.body.date.getDate())
-            })
-        } else if (req.body.startDate && req.body.endDate) {
+        let query = { $and: [{}] }
+        if (req.body.startDate && req.body.endDate) {
             let gt, lt;
             if (req.body.startDate === req.body.endDate) {
                 gt = new Date(req.body.startDate)
@@ -40,13 +36,15 @@ module.exports = async(req, res) =>{
             })
         }
         let leaveData = await DbLeave.find(query)
-                .sort({ createdAt: -1 })
+                .sort({createdAt: -1})
         if(leaveData.length != 0){
-            let json2csvParser = new Parser();
+            console.log('>>>>>>>>>>>>>>>>', leaveData)
+            const fields = ['reportingManager.name', 'reportingManager.email', 'dateOfLeave', 'employeeName', 'employeeEmail', 'reasonOfLeave', 'status'];
+            let json2csvParser = new Parser({fields});
             let csv = json2csvParser.parse(leaveData);
-            
-            res.send(csv)
-            console.log('>>>>>>>>>>>>>>>>', csv)
+            // res.send(Buffer.from(csv));
+            res.send(csv);
+
         } else {
             res.json({
                 success: false,
